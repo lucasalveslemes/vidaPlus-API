@@ -1,0 +1,1063 @@
+{
+  "info": {
+    "_postman_id": "a3ec1e3c-b5cc-4b0b-94ad-1c5d515524b4",
+    "name": "SGHSS",
+    "description": "Testes automatizados da API VidaPlus - Auth, Pacientes, Profissionais e Consultas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45173948",
+    "_collection_link": "https://go.postman.co/collection/45173948-a3ec1e3c-b5cc-4b0b-94ad-1c5d515524b4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Registro realizado\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\" : \"Lucas\",\r\n    \"email\" : \"lucas@vidaplus.com\",\r\n    \"senha\" : \"123456\",\r\n    \"role\" : \"Admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Login realizado\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Token JWT retornado\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.token).to.be.a(\"string\");\r",
+                  "    pm.expect(json.token.length).to.be.above(10);\r",
+                  "});\r",
+                  "\r",
+                  "// Salva o token automaticamente na variável da collection\r",
+                  "var json = pm.response.json();\r",
+                  "if (json.token) {\r",
+                  "    pm.collectionVariables.set(\"token\", json.token);\r",
+                  "    console.log(\"Token salvo com sucesso\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"lucas@vidaplus.com\",\r\n    \"senha\" : \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Criar Pacientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 201 - Paciente criado\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Paciente retornado com ID\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.be.a(\"number\");\r",
+                  "    pm.expect(json.id).to.be.above(0);\r",
+                  "    pm.expect(json.nome).to.eql(\"Maria Oliveira\");\r",
+                  "    pm.expect(json.email).to.eql(\"maria@vidaplus.com\");\r",
+                  "});\r",
+                  "\r",
+                  "// Salva o ID automaticamente para usar nos próximos requests\r",
+                  "var json = pm.response.json();\r",
+                  "if (json.id) {\r",
+                  "    pm.collectionVariables.set(\"pacienteId\", json.id);\r",
+                  "    console.log(\"Paciente ID salvo:\", json.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Maria Oliveira\",\r\n  \"email\": \"maria@vidaplus.com\",\r\n  \"cpf\": \"12345678901\",\r\n  \"telefone\": \"31999999999\",\r\n  \"endereco\": \"Rua das Flores, 123\",\r\n  \"dataNascimento\": \"1990-05-15T00:00:00\",\r\n  \"observacoes\": \"Paciente de teste\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Pacientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Lista retornada\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Retornou uma lista\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json).to.be.an(\"array\");\r",
+                  "    pm.expect(json.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Paciente tem campos obrigatórios\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    var paciente = json[0];\r",
+                  "    pm.expect(paciente).to.have.property(\"id\");\r",
+                  "    pm.expect(paciente).to.have.property(\"nome\");\r",
+                  "    pm.expect(paciente).to.have.property(\"email\");\r",
+                  "    pm.expect(paciente).to.have.property(\"cpf\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Maria Oliveira\",\r\n  \"email\": \"maria@vidaplus.com\",\r\n  \"cpf\": \"12345678901\",\r\n  \"telefone\": \"31999999999\",\r\n  \"endereco\": \"Rua das Flores, 123\",\r\n  \"dataNascimento\": \"1990-05-15T00:00:00\",\r\n  \"observacoes\": \"Paciente de teste\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Pacientes por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Paciente encontrado\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Paciente retornado com dados corretos\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.eql(pm.collectionVariables.get(\"pacienteId\"));\r",
+                  "    pm.expect(json.nome).to.be.a(\"string\");\r",
+                  "    pm.expect(json.email).to.be.a(\"string\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Paciente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204: Atualização realizada.\", function(){\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function(){\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Maria Oliveira Silva\",\r\n  \"email\": \"maria@vidaplus.com\",\r\n  \"cpf\": \"12345678901\",\r\n  \"telefone\": \"31988888888\",\r\n  \"endereco\": \"Rua das Flores, 456\",\r\n  \"dataNascimento\": \"1990-05-15T00:00:00\",\r\n  \"observacoes\": \"Paciente atualizada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir pacientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204: Paciente excluído\", function() {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function(){\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Paciente - CPF Inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 400 - CPF inválido rejeitado\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensagem de erro menciona CPF\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    var erros = JSON.stringify(json);\r",
+                  "    pm.expect(erros.toLowerCase()).to.include(\"cpf\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Teste Inválido\",\r\n  \"email\": \"invalido@vidaplus.com\",\r\n  \"cpf\": \"123.456.789-00\",\r\n  \"telefone\": \"31999999999\",\r\n  \"endereco\": \"Rua Teste, 1\",\r\n  \"dataNascimento\": \"1990-05-15T00:00:00\",\r\n  \"observacoes\": \"Teste negativo CPF\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profissionais",
+      "item": [
+        {
+          "name": "Criar Profissional",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 201 - Profissional criado\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Profissional retornado com ID\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.be.a(\"number\");\r",
+                  "    pm.expect(json.id).to.be.above(0);\r",
+                  "    pm.expect(json.nome).to.eql(\"Dr. João Batista\");\r",
+                  "});\r",
+                  "\r",
+                  "var json = pm.response.json();\r",
+                  "if (json.id) {\r",
+                  "    pm.collectionVariables.set(\"profissionalId\", json.id);\r",
+                  "    console.log(\"Profissional ID salvo:\", json.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Dr. João Batista\",\r\n  \"especialidade\": \"Cardiologia\",\r\n  \"registroProfissional\": \"CRM12345\",\r\n  \"telefone\": \"31977777777\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/profissional",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "profissional"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Profissionais",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Lista retornada\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Retornou uma lista\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json).to.be.an(\"array\");\r",
+                  "    pm.expect(json.length).to.be.above(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/profissional",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "profissional"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Profissionais por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 200: Lista com ID retornado\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de teste abaixo de 2000ms\", function(){\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Profissional retornado com os dados corretos\", function(){\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.be.a(\"number\");\r",
+                  "    pm.expect(json.nome).to.be.a(\"string\");\r",
+                  "    pm.expect(json.especialidade).to.be.a(\"string\")\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/profissional/{{profissionalId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "profissional",
+                "{{profissionalId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Profissional",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Profissional atualizado\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Dr. João Batista\",\r\n    \"especialidade\" : \"Cardiologia Profissional\",\r\n    \"registroProfissional\" : \"CRM12345\",\r\n    \"telefone\" : \"31254687\"\r\n}\r\n\r\n\t\t\t",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/profissional/{{profissionalId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "profissional",
+                "{{profissionalId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir Profissional",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204 - Profissional excluído\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Dr. João Batista\",\r\n    \"especialidade\" : \"Cardiologia Profissional\",\r\n    \"registroProfissional\" : \"CRM12345\",\r\n    \"telefone\" : \"31254687\"\r\n}\r\n\r\n\t\t\t"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/profissional/{{profissionalId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "profissional",
+                "{{profissionalId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Criar Consulta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 201 - Consulta criada\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Consulta retornada com ID\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.be.a(\"number\");\r",
+                  "    pm.expect(json.id).to.be.above(0);\r",
+                  "    pm.expect(json.observacoes).to.eql(\"Consulta de rotina\");\r",
+                  "});\r",
+                  "\r",
+                  "var json = pm.response.json();\r",
+                  "if (json.id) {\r",
+                  "    pm.collectionVariables.set(\"consultaId\", json.id);\r",
+                  "    console.log(\"Consulta ID salvo:\", json.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dataHora\": \"2025-12-01T10:00:00\",\r\n  \"pacienteId\": 1,\r\n  \"profissionalId\": 5,\r\n  \"observacoes\": \"Consulta de rotina\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/consulta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "consulta"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Consultas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Lista retornada\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Retornou uma lista\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json).to.be.an(\"array\");\r",
+                  "    pm.expect(json.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Consulta tem campos obrigatórios\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    var consulta = json[0];\r",
+                  "    pm.expect(consulta).to.have.property(\"id\");\r",
+                  "    pm.expect(consulta).to.have.property(\"dataHora\");\r",
+                  "    pm.expect(consulta).to.have.property(\"pacienteNome\");\r",
+                  "    pm.expect(consulta).to.have.property(\"profissionalNome\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dataHora\": \"2025-12-01T10:00:00\",\r\n  \"pacienteId\": 1,\r\n  \"profissionalId\": 5,\r\n  \"observacoes\": \"Consulta de rotina\"\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/consulta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "consulta"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Consultas por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 - Consulta encontrada\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Consulta retornada com dados corretos\", function () {\r",
+                  "    var json = pm.response.json();\r",
+                  "    pm.expect(json.id).to.be.a(\"number\");\r",
+                  "    pm.expect(json.dataHora).to.be.a(\"string\");\r",
+                  "    pm.expect(json.observacoes).to.eql(\"Consulta de rotina\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/consulta/{{consultaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "consulta",
+                "{{consultaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar consulta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204 - Consulta atualizada\", function(){\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function(){\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dataHora\": \"2025-12-15T14:00:00\",\r\n  \"pacienteId\": 1,\r\n  \"profissionalId\": 5,\r\n  \"observacoes\": \"Consulta reagendada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/consulta/{{consultaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "consulta",
+                "{{consultaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir consulta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204 - Consulta excluída\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/consulta/{{consultaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "consulta",
+                "{{consultaId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Segurança",
+      "item": [
+        {
+          "name": "Acessar sem Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 401 - Acesso negado sem token\", function(){\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tempo de resposta abaixo de 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Teste Inválido\",\r\n  \"email\": \"invalido@vidaplus.com\",\r\n  \"cpf\": \"123.456.789-00\",\r\n  \"telefone\": \"31999999999\",\r\n  \"endereco\": \"Rua Teste, 1\",\r\n  \"dataNascimento\": \"1990-05-15T00:00:00\",\r\n  \"observacoes\": \"Teste negativo CPF\"\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:7059"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "pacienteId",
+      "value": ""
+    },
+    {
+      "key": "profissionalId",
+      "value": ""
+    },
+    {
+      "key": "consultaId",
+      "value": ""
+    }
+  ]
+}
