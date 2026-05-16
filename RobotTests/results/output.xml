@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.11.4 on win32)" generated="2026-05-16T15:13:00.959003" rpa="false" schemaversion="5">
+<suite id="s1" name="Pacientes" source="C:\Projetos\VidaPlus\RobotTests\tests\pacientes.robot">
+<test id="s1-t1" name="CT-01 Login deve retornar token JWT" line="8">
+<kw name="Criar Sessão" owner="api">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.049754" level="INFO">Creating Session using : alias=vidaplus, url=https://localhost:7059, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>vidaplus</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-05-16T15:13:01.049754" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.047605" elapsed="0.002149"/>
+</kw>
+<kw name="Fazer Login" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.049754" level="INFO">${body} = {'email': 'lucas@vidaplus.com', 'senha': '123456'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>senha=${SENHA}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.049754" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">POST Request : url=https://localhost:7059/api/auth/login 
+ path_url=/api/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"email": "lucas@vidaplus.com", "senha": "123456"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.281034" level="INFO">POST Response : url=https://localhost:7059/api/auth/login 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.281034" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.281034" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/auth/login</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.049754" elapsed="0.231280"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<var>${TOKEN}</var>
+<arg>${response.json()['token']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<arg>${TOKEN}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${TOKEN}</value>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.000000"/>
+</return>
+<msg time="2026-05-16T15:13:01.281034" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-05-16T15:13:01.049754" elapsed="0.231280"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">Length is 237.</msg>
+<arg>${token}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">Token obtido: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y</msg>
+<arg>Token obtido: ${token}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.047605" elapsed="0.233429"/>
+</test>
+<test id="s1-t2" name="CT-02 Deve criar um paciente com sucesso" line="14">
+<kw name="Criar Sessão" owner="api">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.281034" level="INFO">Creating Session using : alias=vidaplus, url=https://localhost:7059, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>vidaplus</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.004808"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.004808"/>
+</kw>
+<kw name="Fazer Login" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.285842" level="INFO">${body} = {'email': 'lucas@vidaplus.com', 'senha': '123456'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>senha=${SENHA}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.285842" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.443234" level="INFO">POST Request : url=https://localhost:7059/api/auth/login 
+ path_url=/api/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"email": "lucas@vidaplus.com", "senha": "123456"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.443234" level="INFO">POST Response : url=https://localhost:7059/api/auth/login 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.443234" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.443234" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/auth/login</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.285842" elapsed="0.157392"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.443234" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<var>${TOKEN}</var>
+<arg>${response.json()['token']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.443234" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.443234" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<arg>${TOKEN}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.443234" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${TOKEN}</value>
+<status status="PASS" start="2026-05-16T15:13:01.443234" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2026-05-16T15:13:01.285842" elapsed="0.157392"/>
+</kw>
+<kw name="Obter Header Com Token" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.451815" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.451815" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-05-16T15:13:01.451815" elapsed="0.000000"/>
+</return>
+<msg time="2026-05-16T15:13:01.451815" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-05-16T15:13:01.451815" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.451815" level="INFO">${body} = {'nome': 'Robot Paciente', 'email': 'robot@vidaplus.com', 'cpf': '98765432100', 'telefone': '31911111111', 'endereco': 'Rua Robot, 1', 'dataNascimento': '1995-01-01T00:00:00', 'observacoes': 'Criado p...</msg>
+<var>${body}</var>
+<arg>nome=Robot Paciente</arg>
+<arg>email=robot@vidaplus.com</arg>
+<arg>cpf=98765432100</arg>
+<arg>telefone=31911111111</arg>
+<arg>endereco=Rua Robot, 1</arg>
+<arg>dataNascimento=1995-01-01T00:00:00</arg>
+<arg>observacoes=Criado pelo Robot Framework</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.451815" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">POST Request : url=https://localhost:7059/api/pacientes 
+ path_url=/api/pacientes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y', 'Content-Length': '221', 'Content-Type': 'application/json'} 
+ body=b'{"nome": "Robot Paciente", "email": "robot@vidaplus.com", "cpf": "98765432100", "telefone": "31911111111", "endereco": "Rua Robot, 1", "dataNascimento": "1995-01-01T00:00:00", "observacoes": "Criado pelo Robot Framework"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.586407" level="INFO">POST Response : url=https://localhost:7059/api/pacientes 
+ status=201, reason=Created 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:00 GMT', 'Server': 'Kestrel', 'Location': 'https://localhost:7059/api/Pacientes/9', 'Transfer-Encoding': 'chunked'} 
+ body={"id":9,"nome":"Robot Paciente","email":"robot@vidaplus.com","cpf":"98765432100","telefone":"31911111111","endereco":"Rua Robot, 1","dataNascimento":"1995-01-01T00:00:00","observacoes":"Criado pelo Robot Framework"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.586407" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.586407" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/pacientes</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.451815" elapsed="0.134592"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">${id} = 9</msg>
+<var>${id}</var>
+<arg>${response.json()['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">${PACIENTE_ID} = 9</msg>
+<arg>${PACIENTE_ID}</arg>
+<arg>${id}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">Paciente criado com ID: 9</msg>
+<arg>Paciente criado com ID: ${id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.281034" elapsed="0.305373"/>
+</test>
+<test id="s1-t3" name="CT-03 Deve listar pacientes" line="33">
+<kw name="Criar Sessão" owner="api">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">Creating Session using : alias=vidaplus, url=https://localhost:7059, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>vidaplus</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<kw name="Fazer Login" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.586407" level="INFO">${body} = {'email': 'lucas@vidaplus.com', 'senha': '123456'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>senha=${SENHA}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.749312" level="INFO">POST Request : url=https://localhost:7059/api/auth/login 
+ path_url=/api/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"email": "lucas@vidaplus.com", "senha": "123456"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.749312" level="INFO">POST Response : url=https://localhost:7059/api/auth/login 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.749312" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.749312" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/auth/login</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.162905"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.749312" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<var>${TOKEN}</var>
+<arg>${response.json()['token']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.749312" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<arg>${TOKEN}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${TOKEN}</value>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.162905"/>
+</kw>
+<kw name="Obter Header Com Token" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.749312" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</return>
+<msg time="2026-05-16T15:13:01.749312" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.000000"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">GET Request : url=https://localhost:7059/api/pacientes 
+ path_url=/api/pacientes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y'} 
+ body=None 
+ </msg>
+<msg time="2026-05-16T15:13:01.780749" level="INFO">GET Response : url=https://localhost:7059/api/pacientes 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body=[{"id":1,"nome":"João Silva","email":"joao@example.com","cpf":"12345678901","telefone":"11999999999","endereco":"Rua A, 123","dataNascimento":"1990-05-10T00:00:00","observacoes":"Primeiro Paciente"},{"id":3,"nome":"João da Silva","email":"joao@email.com","cpf":"12345678900","telefone":"31999999999","endereco":"Rua das Flores, 123","dataNascimento":"1990-05-15T00:00:00","observacoes":"Paciente de teste"},{"id":4,"nome":"Maria Oliveira","email":"maria@vidaplus.com","cpf":"12345678901","telefone":"31999999999","endereco":"Rua das Flores, 123","dataNascimento":"1990-05-15T00:00:00","observacoes":"Paciente de teste"},{"id":9,"nome":"Robot Paciente","email":"robot@vidaplus.com","cpf":"98765432100","telefone":"31911111111","endereco":"Rua Robot, 1","dataNascimento":"1995-01-01T00:00:00","observacoes":"Criado pelo Robot Framework"}] 
+ </msg>
+<msg time="2026-05-16T15:13:01.780749" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.780749" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/pacientes</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.749312" elapsed="0.031437"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">${lista} = [{'id': 1, 'nome': 'João Silva', 'email': 'joao@example.com', 'cpf': '12345678901', 'telefone': '11999999999', 'endereco': 'Rua A, 123', 'dataNascimento': '1990-05-10T00:00:00', 'observacoes': 'Primei...</msg>
+<var>${lista}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">Length is 4.</msg>
+<arg>${lista}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">Total de pacientes: 4</msg>
+<arg>Total de pacientes: ${lista.__len__()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.586407" elapsed="0.194342"/>
+</test>
+<test id="s1-t4" name="CT-04 Deve rejeitar CPF inválido" line="44">
+<kw name="Criar Sessão" owner="api">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">Creating Session using : alias=vidaplus, url=https://localhost:7059, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>vidaplus</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<kw name="Fazer Login" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.780749" level="INFO">${body} = {'email': 'lucas@vidaplus.com', 'senha': '123456'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>senha=${SENHA}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.943127" level="INFO">POST Request : url=https://localhost:7059/api/auth/login 
+ path_url=/api/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"email": "lucas@vidaplus.com", "senha": "123456"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.943127" level="INFO">POST Response : url=https://localhost:7059/api/auth/login 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:01 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.943127" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/auth/login</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.162378"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<var>${TOKEN}</var>
+<arg>${response.json()['token']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15d...</msg>
+<arg>${TOKEN}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${TOKEN}</value>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.162378"/>
+</kw>
+<kw name="Obter Header Com Token" owner="api">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</return>
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWa...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.943127" level="INFO">${body} = {'nome': 'Teste Inválido', 'email': 'invalido@robot.com', 'cpf': '123.456.789-00', 'telefone': '31999999999', 'endereco': 'Rua Teste, 1', 'dataNascimento': '1990-01-01T00:00:00', 'observacoes': 'Teste...</msg>
+<var>${body}</var>
+<arg>nome=Teste Inválido</arg>
+<arg>email=invalido@robot.com</arg>
+<arg>cpf=123.456.789-00</arg>
+<arg>telefone=31999999999</arg>
+<arg>endereco=Rua Teste, 1</arg>
+<arg>dataNascimento=1990-01-01T00:00:00</arg>
+<arg>observacoes=Teste negativo</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-05-16T15:13:01.975045" level="INFO">POST Request : url=https://localhost:7059/api/pacientes 
+ path_url=/api/pacientes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWNhc0B2aWRhcGx1cy5jb20iLCJyb2xlIjoiVXNlciIsIm5hbWUiOiJMdWNhcyIsImV4cCI6MTc3ODk2NTk4MSwiaXNzIjoiVmlkYVBsdXNBcGkiLCJhdWQiOiJWaWRhUGx1c0NsaWVudCJ9.Two15dnReb3rx8LYt13ce5GJ0QfdLprfFUadpa8bV5Y', 'Content-Length': '216', 'Content-Type': 'application/json'} 
+ body=b'{"nome": "Teste Inv\\u00e1lido", "email": "invalido@robot.com", "cpf": "123.456.789-00", "telefone": "31999999999", "endereco": "Rua Teste, 1", "dataNascimento": "1990-01-01T00:00:00", "observacoes": "Teste negativo"}' 
+ </msg>
+<msg time="2026-05-16T15:13:01.975045" level="INFO">POST Response : url=https://localhost:7059/api/pacientes 
+ status=400, reason=Bad Request 
+ headers={'Content-Type': 'application/problem+json; charset=utf-8', 'Date': 'Sat, 16 May 2026 18:13:01 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked'} 
+ body={"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"CPF":["The field CPF must be a string with a minimum length of 11 and a maximum length of 11."]},"traceId":"00-00c0606c29c79a6ec790ade41d17bc3c-49d3df90db59d5a3-00"} 
+ </msg>
+<msg time="2026-05-16T15:13:01.975045" level="INFO">C:\Users\lucas\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'localhost'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-05-16T15:13:01.975045" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>vidaplus</arg>
+<arg>/api/pacientes</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.943127" elapsed="0.031918"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.975045" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.975045" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-05-16T15:13:01.975045" level="INFO">API rejeitou CPF inválido corretamente</msg>
+<arg>API rejeitou CPF inválido corretamente</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-05-16T15:13:01.975045" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-05-16T15:13:01.780749" elapsed="0.194296"/>
+</test>
+<status status="PASS" start="2026-05-16T15:13:00.959003" elapsed="1.016042"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Pacientes" id="s1" pass="4" fail="0" skip="0">Pacientes</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
